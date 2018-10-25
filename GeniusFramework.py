@@ -116,12 +116,17 @@ class GeniusFramework:
         except Exception as e:
             return {"status":"ERROR","log":str(e),"result":"Set Information Failed."}
 
-    def GetInfo(self,iid):
+    def GetInfo(self,iid,schema):
+        tmp = schema.split(",")
         iid = (self.w3.toBytes(text=iid))
         result = self.contract_instance.functions.GetInfo(iid).call()
         Odict = dict()
+        for i in range(len(tmp)):
+            Odict[tmp[i].split(" ")[1]] = result[i]
+        '''
         Odict['name'] = result[0]
         Odict['color'] = result[1]
         Odict['description'] = result[2]
         Odict['date'] = result[3]
+        '''
         return Odict

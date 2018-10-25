@@ -1,9 +1,10 @@
+# coding=utf-8
 import GeniusFramework
 import sys
 contract_name = "tea"
 id_type = "bytes32" 
-schema = "string name,string color,string description,string data"
-ipfshash = "QmZVchHd21PihDn4RaLUiCZcUt8J5UzGDkhhdFytufk1XR"
+schema = "string name,string color,string description,string data,string hash"
+ipfshash = "QmTWMxKvnu5EMwQoweHvAmaMxmxW1HGv6ar6r28zHzrZRY"
 
 a = GeniusFramework.GeniusFramework()
 
@@ -15,8 +16,8 @@ a = GeniusFramework.GeniusFramework()
 
 Lresult = a.LoadContractInfo()
 if Lresult['status']=='SUCCESS':
-    #print(a.SetInfo('a','b','c','d','e'))
-    print(a.GetInfo('a'))
+    #print(a.SetInfo('id01','green tea','red','haha','中文','fhash'))
+    print(a.GetInfo('id01',schema))
 else:
     print(Lresult['result'])
 
