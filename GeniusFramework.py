@@ -11,6 +11,7 @@ from ethereum.abi import (
     normalize_name as normalize_abi_method_name,
     method_id as get_abi_method_id)
 from ethereum.utils import encode_int, zpad, decode_hex
+import sqlite3
 
 IPFS_IP = '127.0.0.1'
 IPFS_PORT = '5001'
@@ -123,10 +124,18 @@ class GeniusFramework:
         Odict = dict()
         for i in range(len(tmp)):
             Odict[tmp[i].split(" ")[1]] = result[i]
-        '''
-        Odict['name'] = result[0]
-        Odict['color'] = result[1]
-        Odict['description'] = result[2]
-        Odict['date'] = result[3]
-        '''
         return Odict
+
+    ########################################################################
+
+    def GetDBhash(self,table_name,tid):
+        import hashlib
+        m = hashlib.md5()
+        conn = sqlite3.connect(Cpath+'/data.db')
+        c = conn.cursor()
+        c.execute("SELECT tid,Ddate,Dtype,content,person,tool,amount FROM "+table_name+" WHERE TID = '"+tid+"';")
+        for x in c:
+            m.update(str(x).encode('utf-8'))
+            h = m.hexdigest()
+            break
+        return h
